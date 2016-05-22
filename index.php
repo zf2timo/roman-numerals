@@ -20,30 +20,29 @@ function convertToRomanNumber(string $number) : string
         6 => 'M',
     ];
 
-    $length = strlen($number);
-    for ($i = 0; $i < $length; $i++) {
-        $currentPosition = (int)$number[$i];
-        $nextPosition = (int)($number[$i + 1] ?? -1);
-        $pos = $length - $i - ($currentPosition < 5 ? 1 : 0);
-        $romanNumerical = $map[$pos];
-        if ($currentPosition === 4) {
-            $romanNumerical = $map[$pos] . $map[$pos + 1];
-        } elseif ($currentPosition / 5 < 0.8 && $currentPosition > 1) {
-            $romanNumerical = str_repeat($map[$pos], $currentPosition);
-        } elseif ($currentPosition === 9) {
-            $romanNumerical = $map[$pos - 1] . $map[$pos + 1];
-        } elseif ($currentPosition > 5) {
-            $romanNumerical = $map[$pos] . str_repeat($map[$pos - 1], $currentPosition - 5);
-        } elseif ($nextPosition === 0) {
-            $romanNumerical = $map[$pos + 1];
+    $charPos = 0;
+    $length = strlen($number) - 1;
+    for ($pos = $length; $pos >= 0; $pos--) {
+
+        $currentNumber = (int)$number[$pos];
+
+        if ($currentNumber < 4 && $currentNumber > 0) {
+            $romanianNumber = str_repeat($map[$charPos], $currentNumber);
+        } elseif ($currentNumber === 4) {
+            $romanianNumber = $map[$charPos + 1] . $map[$charPos];
+        } elseif ($currentNumber === 5) {
+            $romanianNumber = $map[$charPos + 1];
+        } elseif ($currentNumber > 5 && $currentNumber < 9) {
+            $romanianNumber = str_repeat($map[$charPos], $currentNumber - 5) . $map[$charPos + 1];
+        } elseif ($currentNumber === 9) {
+            $romanianNumber = $map[$charPos + 2] . $map[$charPos];
+        } else {
+            $romanianNumber = '';
         }
 
-        $result .= $romanNumerical;
-
-        if ($nextPosition === 0) {
-            $i++;
-        }
+        $result .= $romanianNumber;
+        $charPos += 2;
     }
 
-    return $result;
+    return strrev($result);
 }
