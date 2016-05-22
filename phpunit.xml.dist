@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/5.3/phpunit.xsd"
+         backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         cacheTokens="true"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="true"
+         printerClass="PHPUnit_TextUI_ResultPrinter"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
+         verbose="false">
+
+    <!--
+     ! The <testsuites> element and its one or more <testsuite> children can be
+     ! used to compose a test suite out of test suites and test cases.
+     !-->
+    <testsuites>
+        <testsuite name="Roman Numericals Test Suite">
+            <directory>tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <!--
+     ! The <filter> element and its children can be used to configure the
+     ! blacklist and whitelist for the code coverage reporting.
+     !-->
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src/bin</directory>
+            <directory suffix=".php">src/php</directory>
+            <exclude>
+                <directory suffix="Enum.php">src/php</directory>
+                <directory suffix="Exception.php">src/php</directory>
+                <directory suffix="Interface.php">src/php</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="data/coverage/"/>
+    </logging>
+
+</phpunit>
